@@ -1,0 +1,3 @@
+= CapistranoTheBestCompression
+
+Optimized assets compressor for Capistrano.
