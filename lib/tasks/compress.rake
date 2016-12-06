@@ -1,6 +1,9 @@
 desc 'Compress assets'
-task :compress_assets, [:names] do |_, args|
+task :compress_assets, :names do |_, args|
   on roles(:app) do
+    p '--------compress_assets----------'
+    p args
+    p args.names
     assets_path = release_path.join('public', 'assets')
     names = args.names.blank? ? args.names : %w(*.js *.css *.ico *.svg *.pdf)
     names_args = "#{names.join(' -name ')}"
