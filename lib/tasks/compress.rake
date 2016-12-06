@@ -1,4 +1,4 @@
-task :compress_assets, [:names] do |_, args|
+task :compress_assets, [:names] => :environment do |_, args|
   on roles(:app) do
     assets_path = release_path.join('public', 'assets')
     names = args.names.blank? ? args.names : %w(*.js *.css *.ico *.svg *.pdf)
@@ -7,7 +7,7 @@ task :compress_assets, [:names] do |_, args|
   end
 end
 
-task :compress_png do
+task :compress_png => :environment do
   on roles(:app) do
     assets_path = release_path.join('public', 'assets')
     execute "find -L #{assets_path} \\( -name *.png \\) -not \\( -name 'zopflied_*.png' \\) -exec bash -c 'FULLPATH='{}'; FILENAME=${FULLPATH##*/}; BASEDIRECTORY=${FULLPATH%$FILENAME}; [ ! -f \"${BASEDIRECTORY}zopflied_${FILENAME}\" ] && zopflipng \"${FULLPATH}\" \"${BASEDIRECTORY}zopflied_${FILENAME}\" ' \\; "
