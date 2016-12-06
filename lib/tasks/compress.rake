@@ -1,7 +1,9 @@
-task :compress_assets do
+task :compress_assets, [:names] do |_, args|
   on roles(:app) do
     assets_path = release_path.join('public', 'assets')
-    execute "find -L #{assets_path} \\( -name *.js -o -name *.css -o -name *.ico -o -name *.svg -o -name *.pdf \\) -exec bash -c \"[ ! -f '{}.gz' ] && zopfli --gzip --i20 '{}'\" \\; "
+    names = args.names.blank? ? args.names : %w(*.js *.css *.ico *.svg *.pdf)
+    names_args = "#{names.join(' -name ')}"
+    execute "find -L #{assets_path} \\( -name #{names_args} \\) -exec bash -c \"[ ! -f '{}.gz' ] && zopfli --gzip --i20 '{}'\" \\; "
   end
 end
 

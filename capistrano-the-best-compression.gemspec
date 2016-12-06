@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'capistrano-the-best-compression'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.date        = '2016-12-02'
   s.authors     = ['SumatoSoft']
   s.summary     = 'Capistrano the Best Compression'
