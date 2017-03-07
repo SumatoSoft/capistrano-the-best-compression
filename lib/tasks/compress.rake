@@ -4,8 +4,8 @@ namespace :deploy do
     on roles(:app) do
       assets_path = release_path.join('public', 'assets')
       names = args[:names].is_a?(Array) && !(args[:names].empty?) ? args[:names] : %w(*.js *.css *.ico *.svg *.pdf)
-      names_args = "#{names.join(' -name ')}"
-      execute "find -L #{assets_path} \\( -name #{names_args} \\) -exec bash -c \"[ ! -f '{}.gz' ] && zopfli --gzip --i20 '{}'\" \\; "
+      names_args = "#{names.join('" -o -name "')}"
+      execute "find -L #{assets_path} \\( -name \"#{names_args}\" \\) -exec bash -c \"[ ! -f '{}.gz' ] && zopfli --gzip --i20 '{}'\" \\; "
     end
   end
 
