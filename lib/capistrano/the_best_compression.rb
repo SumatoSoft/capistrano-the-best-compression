@@ -1,1 +1,1 @@
-load File.expand_path('../../tasks/compression.rake', __FILE__)
+load File.expand_path('../../tasks/compress.rake', __FILE__)
