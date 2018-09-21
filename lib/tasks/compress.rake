@@ -16,4 +16,12 @@ namespace :deploy do
       execute "find -L #{assets_path + '{assets,packs}'} \\( -name *.png \\) -not \\( -name 'zopflied_*.png' \\) -exec bash -c 'FULLPATH='{}'; FILENAME=${FULLPATH##*/}; BASEDIRECTORY=${FULLPATH%$FILENAME}; [ ! -f \"${BASEDIRECTORY}zopflied_${FILENAME}\" ] && zopflipng \"${FULLPATH}\" \"${BASEDIRECTORY}zopflied_${FILENAME}\" ' \\; "
     end
   end
+
+  desc 'Intall compressor hooks'
+  task :install_compressor_hooks do
+    before 'deploy:publishing', 'deploy:compress_assets'
+    before 'deploy:publishing', 'deploy:compress_png'
+  end
+
+  before :starting, :install_compressor_hooks
 end
