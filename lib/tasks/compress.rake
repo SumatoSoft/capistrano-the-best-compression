@@ -5,6 +5,7 @@ namespace :deploy do
       assets_path = release_path.join('public')
       names = args[:names].is_a?(Array) && !(args[:names].empty?) ? args[:names] : %w(*.js *.css *.ico *.svg *.pdf)
       names_args = "#{names.join('" -o -name "')}"
+      execute "mkdir -p #{ assets_path + '{assets,packs}' }" 
       execute "find -L #{assets_path + '{assets,packs}' } -type f \\( -name \"#{names_args}\" \\) -exec bash -c \"[ ! -f '{}.gz' ] && zopfli --gzip --i20 '{}'\" \\;" 
     end
   end
@@ -13,6 +14,7 @@ namespace :deploy do
   task :compress_png do
     on roles(:app) do
       assets_path = release_path.join('public')
+      execute "mkdir -p #{ assets_path + '{assets,packs}' }"
       execute "find -L #{assets_path + '{assets,packs}'} -type f \\( -name *.png \\) -not \\( -name 'zopflied_*.png' \\) -exec bash -c 'FULLPATH='{}'; FILENAME=${FULLPATH##*/}; BASEDIRECTORY=${FULLPATH%$FILENAME}; [ ! -f \"${BASEDIRECTORY}zopflied_${FILENAME}\" ] && zopflipng \"${FULLPATH}\" \"${BASEDIRECTORY}zopflied_${FILENAME}\" ' \\;"
     end
   end
