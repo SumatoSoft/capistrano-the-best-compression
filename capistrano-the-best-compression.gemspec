@@ -8,6 +8,6 @@ Gem::Specification.new do |s|
   s.summary     = 'Capistrano the Best Compression'
   s.description = 'Capistrano the best compression gem'
 
-  s.files       = Dir['{lib}/**/*'] + ['README.rdoc', 'Rakefile']
+  s.files       = Dir['{lib}/**/*'] + ['README.md', 'Rakefile']
   s.license     = 'MIT'
 end
